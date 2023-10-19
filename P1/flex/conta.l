@@ -2,7 +2,7 @@ digito [0-9]
 letra [A-Za-z]
 %{
     int conta = 0;
-%} 
+%}
 
 %%
 {letra}({letra}|{digito})*  { conta++; puts(yytext); }
