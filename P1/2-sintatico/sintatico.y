@@ -40,6 +40,7 @@
 
 %start programa
 /*VV precedência, o com maior precedência é T_VEZES e T_DIV*/
+
 %left T_E T_OU
 %left T_IGUAL 
 %left T_MAIOR T_MENOR
