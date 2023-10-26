@@ -2,6 +2,7 @@
 #include "sintatico.h"  //o sintatico.h faz a sincronização entre os tokens do sintatico e os termos do lexico
 int yyerror(char *);    
 int numLinha = 1;
+char atomo[100];    
 %}
 
 identificador [a-zA-Z]([a-zA-Z0-9])*
@@ -48,8 +49,8 @@ F                   return T_F;
 <coment>.            /* nada */
 <coment>\n          numLinha++;
 
-{identificador}     return T_IDENTIF;
-{numero}            return T_NUMERO;
+{identificador}     { strcpy (atomo, yytext); return T_IDENTIF; }   /* retorna o nome do identificador */
+{numero}            { strcpy (atomo, yytext); return T_NUMERO; }    /* guarda na variável atomo o identificador*/
 {espaco}            /* nada */
 {novalinha}         numLinha++;
 .                   yyerror ("lexico!");
