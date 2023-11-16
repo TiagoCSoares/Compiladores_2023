@@ -12,3 +12,5 @@ limpa: ;
 terminal: make
 
 ./simples < <nome_do_arquivo.simples>
+
+./mvs <nome_do_arquivo_sem_a_extensão_.simples>
