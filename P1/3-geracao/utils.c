@@ -1,6 +1,7 @@
 // Tabela de SImbolos
 
-enum{
+enum
+{
     INT, 
     LOG
 };
@@ -78,4 +79,14 @@ int desempilha (void)
     if (topo == -1)
         yyerror ("Pilha semantica vazia!");
     return pilha[topo--];      // se a pilha não for vazia retorna a nova posição da pilha após desempilhar
+}
+
+// tipo1 e tipo2 são os tipos esperados na expressão
+// ret é o tipo que será empilhado com resultado da expressão
+void testaTipo (int tipo1, int tipo2, int ret) {
+    int t2 = desempilha();
+    int t1 = desempilha();
+    if (t1 != tipo1 || t2 != tipo2) 
+        yyerror("Incompatibilidade de tipo!");
+    empilha(ret);
 }

@@ -139,7 +139,7 @@ entrada
 
 saida 
     : T_ESCREVA expressao
-        { fprintf(yyout, "\tESCR\n"); }
+        { desempilha(); fprintf(yyout, "\tESCR\n"); }
     ;
 
 atribuicao
@@ -150,7 +150,10 @@ atribuicao
         }
       T_ATRIB expressao
         {
-            int pos = desempilha(); 
+            int tip = desempilha();
+            int pos = desempilha();
+            if (tabSimb[pos].tip != tip)
+                yyerror("Incompatibilidade de tipo!"); 
             fprintf(yyout, "\tARZG\t%d\n", tabSimb[pos].end); 
         }
     ;
@@ -158,6 +161,9 @@ atribuicao
 selecao
     : T_SE expressao T_ENTAO 
         {   
+            int t = desempilha();
+            if (t != LOG)
+                yyerror ("Incompatibilidade de tipo!");
             fprintf(yyout, "\tDSVF\tL%d\n", ++rotulo); 
             empilha(rotulo);
         }
@@ -183,6 +189,9 @@ repeticao
         }
       expressao T_FACA 
         { 
+            int t = desempilha();
+            if (t != LOG)
+                yyerror ("Incompatibilidade de tipo!");
             fprintf(yyout, "\tDSVF\tL%d\n", ++rotulo);
             empilha(rotulo); 
         }
@@ -197,23 +206,23 @@ repeticao
 
 expressao 
     : expressao T_VEZES expressao
-        { fprintf(yyout, "\tMULT\n"); }
+        { testaTipo(INT, INT, INT); fprintf(yyout, "\tMULT\n"); }
     | expressao T_DIV expressao
-        { fprintf(yyout, "\tDIVI\n"); }
+        { testaTipo(INT, INT, INT); fprintf(yyout, "\tDIVI\n"); }
     | expressao T_MAIS expressao
-        { fprintf(yyout, "\tSOMA\n"); }
+        { testaTipo(INT, INT ,INT); fprintf(yyout, "\tSOMA\n"); }
     | expressao T_MENOS expressao
-        { fprintf(yyout, "\tSUBT\n"); }
+        { testaTipo(INT, INT ,INT); fprintf(yyout, "\tSUBT\n"); }
     | expressao T_MAIOR expressao
-        { fprintf(yyout, "\tCMMA\n"); }
+        { testaTipo(INT, INT, LOG); fprintf(yyout, "\tCMMA\n"); }
     | expressao T_MENOR expressao
-        { fprintf(yyout, "\tCMME\n"); }
+        { testaTipo(INT, INT, LOG); fprintf(yyout, "\tCMME\n"); }
     | expressao T_IGUAL expressao
-        { fprintf(yyout, "\tCMIG\n"); }
+        { testaTipo(INT, INT, LOG); fprintf(yyout, "\tCMIG\n"); }
     | expressao T_E expressao
-        { fprintf(yyout, "\tCONJ\n"); }
+        { testaTipo(LOG, LOG, LOG); fprintf(yyout, "\tCONJ\n"); }
     | expressao T_OU expressao
-        { fprintf(yyout, "\tDISJ\n"); }
+        { testaTipo(LOG, LOG, LOG); fprintf(yyout, "\tDISJ\n"); }
     | termo
     ;
 
@@ -222,15 +231,31 @@ termo
         {
             int pos = buscaSimbolo(atomo); 
             fprintf(yyout, "\tCRVG\t%d\n", tabSimb[pos].end); 
+            empilha(tabSimb[pos].tip);
         }
     | T_NUMERO
-        { fprintf(yyout, "\tCRCT\t%s\n", atomo); }
+        { 
+            fprintf(yyout, "\tCRCT\t%s\n", atomo); 
+            empilha(INT);
+        }
     | T_V
-        { fprintf(yyout, "\tCRCT\t1\n"); }
+        { 
+            fprintf(yyout, "\tCRCT\t1\n"); 
+            empilha(LOG);
+        }
     | T_F
-        { fprintf(yyout, "\tCRCT\t0\n"); }
+        { 
+            fprintf(yyout, "\tCRCT\t0\n"); 
+            empilha(LOG);
+        }
     | T_NAO termo
-        { fprintf(yyout, "\tNEGA\n"); }
+        {
+            int t = desempilha();
+            if (t != LOG)
+                yyerror ("Incompatibilidade de tipo!"); 
+            fprintf(yyout, "\tNEGA\n"); 
+            empilha(LOG);
+        }
     | T_ABRE expressao T_FECHA
     ;
 %%
