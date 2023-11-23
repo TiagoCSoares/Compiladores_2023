@@ -1,8 +1,8 @@
 %{
-#include "calc.h"
+#include <stdlib.h>
 #include "tree.c"
 #define YYSTYPE ptno
-#include <stdlib.h>
+#include "calc.h"
 void yyerror (char *);
 %}
 
@@ -13,7 +13,7 @@ void yyerror (char *);
 "+"     return MAIS;                 /*quando ler um + retorna MAIS*/
 "-"     return MENOS;
 "*"     return VEZES;
-"div"   return DIV;
+"/"   return DIV;
 "("     return ABRE;
 ")"     return FECHA;
 \n      return ENTER;

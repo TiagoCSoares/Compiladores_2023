@@ -2,7 +2,7 @@
 #include "lexico.c"
 #include <stdio.h>           /*arquivo sintatico */
 #define YYSTYPE ptno
-ptno RAIZ = NULL;
+ptno raiz = NULL;
 %}
 
 %token VAR
@@ -29,12 +29,13 @@ linha
                    raiz = $2;
                    mostra(raiz, 0);
                }
-        | ;
+        | 
+        ;
 /*$$*/
 comando
     : expr    
             {
-                $$ = $1
+                $$ = $1;
             }           
     | VAR ATRIB expr
             {
@@ -76,7 +77,7 @@ expr
                 adFilho (p, $1);
                 $$ = p;
             }    
-    | ABRE expr FECHA   { $$ = $2 };
+    | ABRE expr FECHA   { $$ = $2; };
     ;
 
 %%
