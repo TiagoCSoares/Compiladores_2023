@@ -86,10 +86,8 @@ registro
 
 
 lista_campos
-    :   /* vazio */
-    | tipo registro
-    /*|  tipo lista_campos T_IDENTIF*/ 
-    |  tipo
+    : tipo T_IDENTIF
+    | lista_campos tipo T_IDENTIF
     
 
 /*
@@ -116,8 +114,8 @@ variaveis
 declaracao_variaveis
     : tipo lista_variaveis declaracao_variaveis
     | tipo lista_variaveis
-    /*| tipo registro declaracao_variaveis*/
-   /* | tipo registro lista_variaveis*/
+    | tipo registro declaracao_variaveis
+    | tipo registro lista_variaveis
     ;
 
 tipo
