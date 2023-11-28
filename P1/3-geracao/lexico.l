@@ -41,6 +41,9 @@ inteiro             return T_INTEIRO;
 logico              return T_LOGICO;
 V                   return T_V;
 F                   return T_F;
+registro            return T_REGISTRO;   
+def                 T_DEF;
+fimdef              T_FIMDEF;
 
 "#".*               /* nada   */     
 "//".*              /* nada */           /*qualquer sequência formada por // seguido de qualquer coisa vai ser descartada*/

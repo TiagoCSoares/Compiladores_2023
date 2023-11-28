@@ -41,6 +41,9 @@ int tipo;
 %token T_FECHA
 %token T_LOGICO
 %token T_INTEIRO
+%token T_REGISTRO
+%token T_DEF 
+%token T_FIMDEF
 
 %start programa
 /*VV precedência, o com maior precedência é T_VEZES e T_DIV*/
@@ -74,6 +77,37 @@ cabecalho
         { fprintf(yyout, "\tINPP\n"); }     // escreve no arquivo após ler o cabecalho
     ;
 
+/* registro entre cabecalho e variaveis */
+/* t_def lista_campos t_fimdef*/
+/*lista campos parecido com lista variaveis*/
+registro
+    : T_DEF lista_campos T_FIMDEF
+    ;
+
+
+lista_campos
+    :   /* vazio */
+    | tipo registro
+    /*|  tipo lista_campos T_IDENTIF*/ 
+    |  tipo
+    
+
+/*
+*lista_campos
+*    : 
+*    | tipo campo lista_campos
+*    | tipo campo 
+*
+*
+*
+*campo
+*    : 
+*    | T_IDENTIF
+*
+*/
+
+/* definir tipo */
+
 variaveis
     : /* vazio */
     | declaracao_variaveis
@@ -82,6 +116,8 @@ variaveis
 declaracao_variaveis
     : tipo lista_variaveis declaracao_variaveis
     | tipo lista_variaveis
+    /*| tipo registro declaracao_variaveis*/
+   /* | tipo registro lista_variaveis*/
     ;
 
 tipo
@@ -89,6 +125,8 @@ tipo
         { tipo = LOG; }
     | T_INTEIRO
         { tipo = INT; }
+    | T_REGISTRO 
+        { tipo = REG; }
     ;
 
 lista_variaveis
