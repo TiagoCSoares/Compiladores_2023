@@ -43,6 +43,7 @@ V                   return T_V;
 F                   return T_F;
 def                 return T_DEF;
 fimdef              return T_FIMDEF;
+registro            return T_REGISTRO;
 
 
 

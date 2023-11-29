@@ -44,6 +44,7 @@ int tipo;
 %token T_DEF 
 %token T_FIMDEF
 %token T_REGISTRO
+%token T_IDPONTO
 
 %start programa
 /*VV precedência, o com maior precedência é T_VEZES e T_DIV*/
@@ -56,7 +57,7 @@ int tipo;
 %%
 
 programa
-    : cabecalho variaveis 
+    : cabecalho define_registro variaveis 
         { 
             mostraTabela();
             empilha (contaVar);
@@ -88,7 +89,7 @@ tipo
 
 define_registro
     : define define_registro 
-    | define 
+    | /*vazio*/
     ;
 
 

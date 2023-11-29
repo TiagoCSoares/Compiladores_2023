@@ -3,7 +3,8 @@
 enum
 {
     INT, 
-    LOG
+    LOG,
+    REG
 };
 
 #define TAM_TAB 100
