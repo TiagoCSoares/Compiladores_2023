@@ -14,6 +14,7 @@ programa declararegistro
     logico z
 
 inicio 
+
    escreva y.x.a
    escreva x
 fimprograma

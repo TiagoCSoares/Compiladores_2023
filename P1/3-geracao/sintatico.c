@@ -570,7 +570,7 @@ static const yytype_int16 yyrline[] =
      124,   133,   144,   145,   149,   150,   151,   152,   156,   157,
      161,   170,   176,   175,   192,   200,   191,   215,   220,   214,
      237,   239,   241,   243,   245,   247,   249,   251,   253,   255,
-     261,   274,   273,   283,   284,   289,   294,   299,   307
+     260,   273,   272,   282,   283,   288,   293,   298,   306
 };
 #endif
 
@@ -1432,7 +1432,7 @@ yyreduce:
     break;
 
   case 50: /* expressao_acesso: T_IDENTIF  */
-#line 262 "sintatico.y"
+#line 261 "sintatico.y"
         {
             if (ehRegistro) {
                 empilha(REG);
@@ -1441,14 +1441,14 @@ yyreduce:
                 int pos = buscaSimbolo(atomo); 
                 fprintf(yyout, "\tCRVG\t%d\n", tabSimb[pos].end); 
                 empilha(tabSimb[pos].tip);
-                ehRegistro = 0;
             }
+            ehRegistro = 0;
         }
 #line 1448 "sintatico.c"
     break;
 
   case 51: /* $@8: %empty  */
-#line 274 "sintatico.y"
+#line 273 "sintatico.y"
         {
             if (!ehRegistro) 
                 ehRegistro = 1;
@@ -1457,7 +1457,7 @@ yyreduce:
     break;
 
   case 54: /* termo: T_NUMERO  */
-#line 285 "sintatico.y"
+#line 284 "sintatico.y"
         { 
             fprintf(yyout, "\tCRCT\t%s\n", atomo); 
             empilha(INT);
@@ -1466,7 +1466,7 @@ yyreduce:
     break;
 
   case 55: /* termo: T_V  */
-#line 290 "sintatico.y"
+#line 289 "sintatico.y"
         { 
             fprintf(yyout, "\tCRCT\t1\n"); 
             empilha(LOG);
@@ -1475,7 +1475,7 @@ yyreduce:
     break;
 
   case 56: /* termo: T_F  */
-#line 295 "sintatico.y"
+#line 294 "sintatico.y"
         { 
             fprintf(yyout, "\tCRCT\t0\n"); 
             empilha(LOG);
@@ -1484,7 +1484,7 @@ yyreduce:
     break;
 
   case 57: /* termo: T_NAO termo  */
-#line 300 "sintatico.y"
+#line 299 "sintatico.y"
         {
             int t = desempilha();
             if (t != LOG)
@@ -1689,7 +1689,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 309 "sintatico.y"
+#line 308 "sintatico.y"
 
 
 int main(int argc, char *argv[]) {
