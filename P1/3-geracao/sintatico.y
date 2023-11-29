@@ -7,6 +7,7 @@
 #include "utils.c"
 int contaVar = 0;
 int rotulo = 0;
+int ehRegistro = 0;
 int tipo;
 %}
 
@@ -254,13 +255,31 @@ expressao
     | termo
     ;
 
-termo
+
+
+expressao_acesso
     : T_IDENTIF
         {
-            int pos = buscaSimbolo(atomo); 
-            fprintf(yyout, "\tCRVG\t%d\n", tabSimb[pos].end); 
-            empilha(tabSimb[pos].tip);
+            if (ehRegistro) {
+                empilha(REG);
+            }   
+            else {
+                int pos = buscaSimbolo(atomo); 
+                fprintf(yyout, "\tCRVG\t%d\n", tabSimb[pos].end); 
+                empilha(tabSimb[pos].tip);
+            }
         }
+    | T_IDPONTO 
+        {
+            if (!ehRegistro) 
+                ehRegistro = 1;
+        }
+        expressao_acesso
+    ;
+
+
+termo
+    : expressao_acesso
     | T_NUMERO
         { 
             fprintf(yyout, "\tCRCT\t%s\n", atomo); 

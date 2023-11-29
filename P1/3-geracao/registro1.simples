@@ -7,8 +7,13 @@ programa declararegistro
     def
         registro c x 
         inteiro y 
-    fimdef 
+    fimdef d 
+
+    inteiro x 
+    registro d y
+    logico z
 
 inicio 
-    escreva x
-    
+   escreva y.x.a
+   escreva x
+fimprograma

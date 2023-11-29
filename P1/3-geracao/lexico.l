@@ -55,6 +55,11 @@ registro            return T_REGISTRO;
 <coment>\n          numLinha++;
 
 {identificador}     { strcpy (atomo, yytext); return T_IDENTIF; }   /* retorna o nome do identificador */
+{identificador}"."  { 
+                        strcpy (atomo, yytext);
+                        atomo[strlen(atomo)-1] = 0;    //pega o tamanho do atomo e na posição, tam-1 que é o ponto, e o sobescreve como 0 apagando da string 
+                        return T_IDPONTO;   
+                    }
 {numero}            { strcpy (atomo, yytext); return T_NUMERO; }    /* guarda na variável atomo o identificador*/
 {espaco}            /* nada */
 {novalinha}         numLinha++;

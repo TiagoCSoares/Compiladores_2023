@@ -7,6 +7,10 @@ enum
     REG
 };
 
+char nomeTipo[3][4] = {
+    "INT", "LOG", "REG"
+};
+
 #define TAM_TAB 100
 
 struct  elemTabSimbolos 
@@ -59,7 +63,7 @@ void mostraTabela()
         printf("\n%30s | %3d | %s", 
                 tabSimb[i].id,
                 tabSimb[i].end,
-                tabSimb[i].tip == INT? "INT" : "LOG");
+                nomeTipo[tabSimb[i].tip]);
     puts("");
 }
 
