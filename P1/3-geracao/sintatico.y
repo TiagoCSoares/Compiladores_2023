@@ -158,7 +158,7 @@ entrada_saida
     ;
 
 entrada
-    : T_LEIA T_IDENTIF
+    : T_LEIA T_IDENTIF            //TODO: adiconar expressao de acesso
         { 
             int pos = buscaSimbolo (atomo);
             fprintf(yyout, "\tLEIA\n"); 
@@ -167,12 +167,12 @@ entrada
     ;
 
 saida 
-    : T_ESCREVA expressao
+    : T_ESCREVA expressao               //TODO: 
         { desempilha(); fprintf(yyout, "\tESCR\n"); }
     ;
 
-atribuicao
-    : T_IDENTIF 
+atribuicao          
+    : T_IDENTIF                 //TODO: lado esquerdo da expressão de acesso pode ser uma expressao de acesso
         {
             int pos = buscaSimbolo(atomo);
             empilha(pos);
@@ -256,7 +256,6 @@ expressao
     ;
 
 
-
 expressao_acesso
     : T_IDENTIF
         {
@@ -268,6 +267,7 @@ expressao_acesso
                 fprintf(yyout, "\tCRVG\t%d\n", tabSimb[pos].end); 
                 empilha(tabSimb[pos].tip);
             }
+            ehRegistro = 0;
         }
     | T_IDPONTO 
         {
