@@ -1,0 +1,14 @@
+programa declararegistro
+    def
+        inteiro a
+        logico b
+    fimdef c 
+
+    def
+        registro c x 
+        inteiro y 
+    fimdef 
+
+inicio 
+    escreva x
+    

@@ -84,7 +84,10 @@ extern int yydebug;
     T_ABRE = 285,                  /* T_ABRE  */
     T_FECHA = 286,                 /* T_FECHA  */
     T_LOGICO = 287,                /* T_LOGICO  */
-    T_INTEIRO = 288                /* T_INTEIRO  */
+    T_INTEIRO = 288,               /* T_INTEIRO  */
+    T_DEF = 289,                   /* T_DEF  */
+    T_FIMDEF = 290,                /* T_FIMDEF  */
+    T_REGISTRO = 291               /* T_REGISTRO  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
