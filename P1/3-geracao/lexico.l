@@ -41,6 +41,11 @@ inteiro             return T_INTEIRO;
 logico              return T_LOGICO;
 V                   return T_V;
 F                   return T_F;
+def                 return T_DEF;
+fimdef              return T_FIMDEF;
+registro            return T_REGISTRO;
+
+
 
 "#".*               /* nada   */     
 "//".*              /* nada */           /*qualquer sequência formada por // seguido de qualquer coisa vai ser descartada*/
@@ -50,6 +55,11 @@ F                   return T_F;
 <coment>\n          numLinha++;
 
 {identificador}     { strcpy (atomo, yytext); return T_IDENTIF; }   /* retorna o nome do identificador */
+{identificador}"."  { 
+                        strcpy (atomo, yytext);
+                        atomo[strlen(atomo)-1] = 0;    //pega o tamanho do atomo e na posição, tam-1 que é o ponto, e o sobescreve como 0 apagando da string 
+                        return T_IDPONTO;   
+                    }
 {numero}            { strcpy (atomo, yytext); return T_NUMERO; }    /* guarda na variável atomo o identificador*/
 {espaco}            /* nada */
 {novalinha}         numLinha++;

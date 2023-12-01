@@ -3,16 +3,32 @@
 enum
 {
     INT, 
-    LOG
+    LOG,
+    REG
 };
+
+//TODO: criar lista de campos?
+
+//TODO: criar função para percorrer a lista de campos
+
+
+char nomeTipo[3][4] = {
+    "INT", "LOG", "REG"
+};
+
+// criar uma estrutura e operações para manipular uma lista de campos
 
 #define TAM_TAB 100
 
+//acrescentar campos na tabela
 struct  elemTabSimbolos 
 {
     char id[100];   // nome do identificador   
     int end;        // endereco
     int tip;        // tipo
+    //int tam; 
+    //int pos
+    //---  campos;
 } tabSimb[TAM_TAB], elemTab;
 
 int posTab = 0;    // indica a próxima posição livre para inserção
@@ -58,7 +74,7 @@ void mostraTabela()
         printf("\n%30s | %3d | %s", 
                 tabSimb[i].id,
                 tabSimb[i].end,
-                tabSimb[i].tip == INT? "INT" : "LOG");
+                nomeTipo[tabSimb[i].tip]);
     puts("");
 }
 

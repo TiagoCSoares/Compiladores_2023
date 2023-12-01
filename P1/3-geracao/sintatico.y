@@ -7,6 +7,7 @@
 #include "utils.c"
 int contaVar = 0;
 int rotulo = 0;
+int ehRegistro = 0;
 int tipo;
 %}
 
@@ -41,6 +42,10 @@ int tipo;
 %token T_FECHA
 %token T_LOGICO
 %token T_INTEIRO
+%token T_DEF 
+%token T_FIMDEF
+%token T_REGISTRO
+%token T_IDPONTO
 
 %start programa
 /*VV precedência, o com maior precedência é T_VEZES e T_DIV*/
@@ -53,7 +58,7 @@ int tipo;
 %%
 
 programa
-    : cabecalho variaveis 
+    : cabecalho define_registro variaveis 
         { 
             mostraTabela();
             empilha (contaVar);
@@ -74,6 +79,36 @@ cabecalho
         { fprintf(yyout, "\tINPP\n"); }     // escreve no arquivo após ler o cabecalho
     ;
 
+tipo
+    : T_LOGICO 
+        { tipo = LOG; }
+    | T_INTEIRO
+        { tipo = INT; }
+    | T_REGISTRO T_IDENTIF
+        { tipo = REG; }
+    ;
+
+define_registro
+    : define define_registro 
+    | /*vazio*/
+    ;
+
+
+define 
+    : T_DEF definicao_campos T_FIMDEF T_IDENTIF
+    ;
+
+definicao_campos 
+    : tipo lista_campos definicao_campos
+    | tipo lista_campos 
+    ;
+
+lista_campos 
+    : lista_campos T_IDENTIF
+    | T_IDENTIF
+    ;
+
+
 variaveis
     : /* vazio */
     | declaracao_variaveis
@@ -84,12 +119,6 @@ declaracao_variaveis
     | tipo lista_variaveis
     ;
 
-tipo
-    : T_LOGICO 
-        { tipo = LOG; }
-    | T_INTEIRO
-        { tipo = INT; }
-    ;
 
 lista_variaveis
     : lista_variaveis 
@@ -129,7 +158,7 @@ entrada_saida
     ;
 
 entrada
-    : T_LEIA T_IDENTIF
+    : T_LEIA T_IDENTIF            //TODO: adiconar expressao de acesso
         { 
             int pos = buscaSimbolo (atomo);
             fprintf(yyout, "\tLEIA\n"); 
@@ -138,12 +167,12 @@ entrada
     ;
 
 saida 
-    : T_ESCREVA expressao
+    : T_ESCREVA expressao               //TODO: 
         { desempilha(); fprintf(yyout, "\tESCR\n"); }
     ;
 
-atribuicao
-    : T_IDENTIF 
+atribuicao          
+    : T_IDENTIF                 //TODO: lado esquerdo da expressão de acesso pode ser uma expressao de acesso
         {
             int pos = buscaSimbolo(atomo);
             empilha(pos);
@@ -226,13 +255,31 @@ expressao
     | termo
     ;
 
-termo
+
+expressao_acesso
     : T_IDENTIF
         {
-            int pos = buscaSimbolo(atomo); 
-            fprintf(yyout, "\tCRVG\t%d\n", tabSimb[pos].end); 
-            empilha(tabSimb[pos].tip);
+            if (ehRegistro) {
+                empilha(REG);
+            }   
+            else {
+                int pos = buscaSimbolo(atomo); 
+                fprintf(yyout, "\tCRVG\t%d\n", tabSimb[pos].end); 
+                empilha(tabSimb[pos].tip);
+            }
+            ehRegistro = 0;
         }
+    | T_IDPONTO 
+        {
+            if (!ehRegistro) 
+                ehRegistro = 1;
+        }
+        expressao_acesso
+    ;
+
+
+termo
+    : expressao_acesso
     | T_NUMERO
         { 
             fprintf(yyout, "\tCRCT\t%s\n", atomo); 
