@@ -7,9 +7,6 @@ enum
     REG
 };
 
-//TODO: criar lista de campos?
-
-//TODO: criar função para percorrer a lista de campos
 
 
 char nomeTipo[3][4] = {
@@ -17,6 +14,39 @@ char nomeTipo[3][4] = {
 };
 
 // criar uma estrutura e operações para manipular uma lista de campos
+
+/* Ex Luiz
+typedef struct no * ptno;
+struct no {
+    char info;
+    ptno prox;
+};
+
+
+ptno insere (ptno L, char info) {
+
+    ptno p, new;
+    new = (ptno)malloc(sizeof(struct no));
+    new -> info = info;
+    new -> prox = NULL;
+    p = L;
+    while (p && p->prox)
+        p = p->prox;
+    if(p)
+        p->prox = new;
+}
+
+ptno busca (ptno L, char info) {
+    while(L && L->info != info)
+        L = L->prox;
+    return L;
+}
+
+*/
+
+
+
+
 
 #define TAM_TAB 100
 
