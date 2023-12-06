@@ -114,7 +114,7 @@ definicoes
 define 
     : T_DEF 
         {
-            // TODO #1
+            // TODO #0
             // Iniciar a lista de campos
         }
     definicao_campos T_FIMDEF T_IDENTIF    
@@ -132,7 +132,17 @@ definicao_campos
 
 lista_campos 
     : lista_campos T_IDENTIF
+        {
+            // TODO #1
+            // acrescentar esse campo na lista de  campos que
+            // esta sendo construida
+            // o deslocamento (endereço) do próximo campo
+            // será o deslocamento anterior mais o tamanho desse campo
+        }
     | T_IDENTIF
+        {
+            // idem
+        }
     ;
 
 
@@ -332,6 +342,8 @@ expressao_acesso
                 // 1. buscar esse campo na lista de campos
                 // 2. Se não encontrar, erro
                 // 3. guardar o TAM, DES e TIP desse campo
+                //      o tipo (TIP) nesse caso é a posição do tipo
+                //      na tabela de simbolos
             }   
             else {
                 // TODO #12
